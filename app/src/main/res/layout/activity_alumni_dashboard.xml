@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@drawable/gradient_bg">
+
+    <!-- Logout and Group Chat Button -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnLogout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Logout"
+            android:background="@drawable/button_bg3"
+            android:textColor="#00FFF7"
+            android:layout_alignParentStart="true"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnGroupChat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Group Chat"
+            android:background="@drawable/button_bg3"
+            android:textColor="#00FFF7"
+            android:layout_alignParentEnd="true"/>
+    </RelativeLayout>
+
+    <!-- Heading for Session Area -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Manage Alumni Seminars"
+        android:layout_marginTop="5dp"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textColor="#FFFFFF"
+        android:layout_marginBottom="10dp"/>
+
+    <!-- Create New Session Section -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/card_background"
+        android:padding="12dp"
+        android:layout_marginBottom="12dp">
+
+        <EditText
+            android:id="@+id/etSessionTitle"
+            android:hint="Enter Session Title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:background="@drawable/input_bg"
+            android:padding="10dp"/>
+
+        <EditText
+            android:id="@+id/etSessionStartTime"
+            android:hint="Start Time (e.g., 15:30)"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="datetime"
+            android:background="@drawable/input_bg"
+            android:padding="10dp"
+            android:layout_marginTop="8dp"/>
+
+        <Button
+            android:id="@+id/btnCreateSession"
+            android:text="Create Session"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_bg3"
+            android:textColor="#00FFF7"
+            android:layout_marginTop="10dp"/>
+    </LinearLayout>
+
+    <!-- Active Sessions Area -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Active Sessions"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textColor="#FFFFFF"
+        android:layout_marginBottom="10dp"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp">
+
+        <LinearLayout
+            android:id="@+id/sessionListLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"/>
+    </ScrollView>
+
+</LinearLayout>

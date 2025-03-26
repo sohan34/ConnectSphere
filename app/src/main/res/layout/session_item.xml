@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="150dp"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="10dp"
+    android:background="@drawable/session_background"
+    android:layout_margin="10dp">
+
+    <!-- Session Title -->
+    <TextView
+        android:id="@+id/tvSessionTitle"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:textSize="18sp"
+        android:textColor="#0037FF"
+        android:gravity="center"
+        android:padding="10dp"
+        android:textStyle="bold"
+        android:background="#00FFFFFF" />
+
+    <!-- Join Now Button (Hidden Initially) -->
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnJoinNow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Join Now"
+        android:backgroundTint="#0055FF"
+        android:textColor="@android:color/white"
+        android:layout_marginTop="10dp"
+        android:visibility="gone" />
+</LinearLayout>

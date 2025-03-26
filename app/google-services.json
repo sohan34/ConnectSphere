@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "238207334044",
+    "project_id": "connectsphere-6ab0d",
+    "storage_bucket": "connectsphere-6ab0d.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:238207334044:android:11935c529614824e309f59",
+        "android_client_info": {
+          "package_name": "com.sohan.connectsphere"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCheqyIfCx-4JcuY2shzvh0DpVaw6jSXWU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
