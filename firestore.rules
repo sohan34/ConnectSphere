@@ -1,0 +1,29 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Allow authenticated users to read and write to PublicChat
+    match /PublicChat/{document=**} {
+      allow read, write: if request.auth != null;
+    }
+    
+    // Allow users to read and write their own user data
+    match /Users/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+    
+    // Allow authenticated users to read and write to Chats
+    match /Chats/{document=**} {
+      allow read, write: if request.auth != null;
+    }
+    
+    // Allow authenticated users to read and write to Sessions
+    match /Sessions/{document=**} {
+      allow read, write: if request.auth != null;
+    }
+    
+    // Allow authenticated users to read and write to Resources
+    match /Resources/{document=**} {
+      allow read, write: if request.auth != null;
+    }
+  }
+} 

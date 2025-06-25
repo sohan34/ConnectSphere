@@ -12,12 +12,23 @@
     <TextView
         android:id="@+id/tvSessionTitle"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="wrap_content"
         android:textSize="18sp"
         android:textColor="#0037FF"
         android:gravity="center"
-        android:padding="10dp"
+        android:padding="5dp"
         android:textStyle="bold"
+        android:background="#00FFFFFF" />
+
+    <!-- Alumni Name -->
+    <TextView
+        android:id="@+id/tvAlumniName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:textColor="#666666"
+        android:gravity="center"
+        android:padding="5dp"
         android:background="#00FFFFFF" />
 
     <!-- Join Now Button (Hidden Initially) -->

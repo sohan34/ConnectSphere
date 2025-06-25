@@ -17,29 +17,30 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 public class MainActivity extends AppCompatActivity {
 
-
     private EditText etEmail, etPassword;
     private Button btnLogin, btnForgotPassword, btnSignUp;
     private FirebaseAuth mAuth;
     private DatabaseReference databaseReference;
+    private FirebaseFirestore firestore;
+    private LoadingDialog loadingDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Initialize Firebase
         mAuth = FirebaseAuth.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference("Users");
+        firestore = FirebaseFirestore.getInstance();
+        loadingDialog = new LoadingDialog(this);
 
-
+        // Initialize views
         etEmail = findViewById(R.id.etEmail);
         etPassword = findViewById(R.id.etPassword);
         btnLogin = findViewById(R.id.btnLogin);
         btnForgotPassword = findViewById(R.id.btnForgotPassword);
-        btnSignUp = findViewById(R.id.btnSignUp); // Added Sign Up Button
-
-        // Toggle Logic - Show/Hide Sign Up & Forgot Password
-
+        btnSignUp = findViewById(R.id.btnSignUp);
 
         btnLogin.setOnClickListener(v -> loginUser());
 
@@ -62,41 +63,47 @@ public class MainActivity extends AppCompatActivity {
         String email = etEmail.getText().toString().trim();
         String password = etPassword.getText().toString().trim();
 
-        if (TextUtils.isEmpty(email) || TextUtils.isEmpty(password)) {
-            Toast.makeText(this, "Please enter email and password", Toast.LENGTH_SHORT).show();
+        if (email.isEmpty() || password.isEmpty()) {
+            Toast.makeText(this, "Please fill all fields", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        mAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, task -> {
-                    if (task.isSuccessful()) {
-                        FirebaseUser user = mAuth.getCurrentUser();
-                        if (user != null) {
-                            FirebaseFirestore firestore = FirebaseFirestore.getInstance();
-                            firestore.collection("Users").document(user.getUid()).get()
-                                    .addOnCompleteListener(task1 -> {
-                                        if (task1.isSuccessful() && task1.getResult().exists()) {
-                                            String userType = task1.getResult().getString("userType");
-                                            Toast.makeText(MainActivity.this, "Logged in as " + userType, Toast.LENGTH_SHORT).show();
-                                            if(userType.equalsIgnoreCase("Student")) {
-                                                navigateToDashboard();
-                                            }else{
-                                                navigateToDashboard1();
-                                            }
-                                        } else {
-                                            Toast.makeText(MainActivity.this, "User data not found!", Toast.LENGTH_SHORT).show();
-                                        }
-                                    })
-                                    .addOnFailureListener(e -> {
-                                        Toast.makeText(MainActivity.this, "Error fetching user data: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                                    });
-                        }
-                    } else {
-                        Toast.makeText(MainActivity.this, "Authentication failed", Toast.LENGTH_SHORT).show();
-                    }
-                });
-    }
+        // Show loading animation
+        loadingDialog.show();
 
+        mAuth.signInWithEmailAndPassword(email, password)
+            .addOnCompleteListener(this, task -> {
+                if (task.isSuccessful()) {
+                    FirebaseUser user = mAuth.getCurrentUser();
+                    if (user != null) {
+                        // Get user type from Firestore
+                        firestore.collection("Users").document(user.getUid())
+                            .get()
+                            .addOnSuccessListener(documentSnapshot -> {
+                                String userType = documentSnapshot.getString("userType");
+                                if (userType != null) {
+                                    if (userType.equalsIgnoreCase("Student")) {
+                                        startActivity(new Intent(MainActivity.this, DashboardActivity.class));
+                                    } else if (userType.equalsIgnoreCase("Alumni")) {
+                                        startActivity(new Intent(MainActivity.this, AlumniDashboardActivity.class));
+                                    }
+                                    finish();
+                                } else {
+                                    Toast.makeText(MainActivity.this, "User type not set", Toast.LENGTH_SHORT).show();
+                                }
+                                loadingDialog.dismiss();
+                            })
+                            .addOnFailureListener(e -> {
+                                Toast.makeText(MainActivity.this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                loadingDialog.dismiss();
+                            });
+                    }
+                } else {
+                    Toast.makeText(MainActivity.this, "Authentication failed: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                    loadingDialog.dismiss();
+                }
+            });
+    }
 
     private void resetPassword(String email) {
         mAuth.sendPasswordResetEmail(email)
@@ -110,12 +117,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void navigateToDashboard() {
-        // Navigate to Dashboard
         startActivity(new Intent(MainActivity.this, DashboardActivity.class));
         finish();
     }
+
     private void navigateToDashboard1() {
-        // Navigate to Dashboard
         startActivity(new Intent(MainActivity.this, AlumniDashboardActivity.class));
         finish();
     }
