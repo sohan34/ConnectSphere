@@ -19,7 +19,7 @@
 - **Frontend:** Android (Java, XML)  
 - **Backend/Database:** Firebase Realtime Database  
 - **Authentication:** Firebase Auth  
-- **Admin Panel:** Web-based (PHP/MySQL or Firebase Hosting if applicable)  
+- **Admin Panel:** Web-based (Firebase Hosting)  
 - **Tools:** Git, Android Studio, Firebase Console
 
 ---
