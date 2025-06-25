@@ -23,8 +23,3 @@
 - **Tools:** Git, Android Studio, Firebase Console
 
 ---
-
-## 📸 Screenshots
-
-> *(Include key screens like login, chat interface, post updates, admin panel)*  
-Example:
